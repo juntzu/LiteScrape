@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Chris on 20/08/2017.
@@ -69,10 +71,17 @@ public class ParserTest {
         SourceParser realisticDoc = new SourceParser(scraper.getUrlSource("https://ms.taleo.net/careersection/2/jobsearch.ftl?lang=en"));
 
         BufferedWriter writer = null;
+
+        System.out.println("Writing to output.txt");
         try
         {
-            writer = new BufferedWriter( new FileWriter( System.getProperty("user.dir")+ "/output.txt"));
-            writer.write( realisticDoc.parseDoc("https://ms.taleo.net"));
+
+
+            String path = System.getProperty("user.dir")+ "/ms.taleo.net"+ new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+
+            new File(path).mkdir();
+            writer = new BufferedWriter( new FileWriter( path+"/output.txt"));
+            writer.write( realisticDoc.parseDocs("https://ms.taleo.net"));
 
         }
         catch ( IOException e)
